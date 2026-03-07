@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro - Reyes del Caos</title>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a0000, #300000, #0f000f);
+      color: #e0e0e0;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      background: rgba(30, 0, 0, 0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 10px 40px rgba(200, 0, 0, 0.4);
+      border: 1px solid #5c0000;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .clan-logo {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
+      border: 3px solid #8b0000;
+    }
+
+    .clan-name {
+      color: #c41e3a;
+      font-size: 2.4rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px #8b0000, 0 0 20px #8b0000;
+      margin: 0;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #a00000;
+      margin: 0.5rem 0 2rem;
+      font-size: 1.8rem;
+      text-shadow: 0 2px 4px #000;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.6rem;
+      color: #ff9999;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #5c0000;
+      border-radius: 8px;
+      background: #1a0000;
+      color: #fff;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: all 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #c41e3a;
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.3);
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 3rem;
+      margin-top: 0.6rem;
+    }
+
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      cursor: pointer;
+      color: #ffcccc;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 1.5rem 0;
+    }
+
+    .checkbox-group label {
+      margin: 0;
+      line-height: 1.4;
+      color: #ff9999;
+      user-select: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(90deg, #8b0000, #c41e3a, #8b0000);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1.8rem;
+      transition: all 0.3s;
+      text-shadow: 0 1px 3px #000;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(196, 30, 58, 0.5);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .rules {
+      font-size: 0.95rem;
+      color: #ffaaaa;
+      margin-top: 2rem;
+      padding: 14px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 8px;
+      border-left: 4px solid #8b0000;
+      line-height: 1.5;
+    }
+
+    #successMessage {
+      display: none;
+      text-align: center;
+      color: #00ff88;
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      padding: 15px;
+      background: rgba(0, 100, 0, 0.3);
+      border-radius: 8px;
+    }
+
+    #errorMessage {
+      display: none;
+      text-align: center;
+      color: #ff4444;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <img src="rc.png" alt="Logo Reyes del Caos" class="clan-logo">
+      <h2 class="clan-name">Reyes del Caos</h2>
+    </div>
+
+    <h1>Registro al Clan</h1>
+
+    <form id="registroForm">
+
+      <div class="form-group">
+        <label for="nombre">Nombre completo o apodo:</label>
+        <input type="text" id="nombre" name="nombre" required placeholder="Ej: GonzaloGamer27" maxlength="40">
+      </div>
+
+      <div class="form-group">
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" min="10" max="60" required placeholder="Ej: 15">
+      </div>
+
+      <div class="form-group">
+        <label for="usuarioRoblox">Usuario de Roblox (exacto):</label>
+        <input type="text" id="usuarioRoblox" name="usuarioRoblox" required placeholder="Ej: xXProGamerXx" maxlength="50">
+      </div>
+
+      <div class="form-group">
+        <label>¿Estuviste en algún otro clan anteriormente?</label>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="otroClan" value="Sí" required> Sí
+          </label>
+          <label>
+            <input type="radio" name="otroClan" value="No"> No
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="aceptoReglas" required>
+        <label for="aceptoReglas">
+          Sí, acepto y me comprometo a cumplir con las <strong>reglas del clan</strong>
+        </label>
+      </div>
+
+      <div class="rules">
+        Recuerda: el incumplimiento de las reglas puede resultar en expulsión permanente del clan Reyes del Caos.
+      </div>
+
+      <button type="submit" id="submitBtn">Enviar Registro</button>
+
+      <div id="successMessage">¡Registro enviado con éxito! Pronto te contactaremos en Reyes del Caos 🔥</div>
+      <div id="errorMessage">Hubo un error al enviar. Intenta de nuevo o avísame directamente.</div>
+
+    </form>
+  </div>
+
+  <script>
+    // Inicializa EmailJS con tu Public Key
+    emailjs.init({
+      publicKey: "H9vEYol704RD8rISV",
+    });
+
+    const form = document.getElementById('registroForm');
+    const successMsg = document.getElementById('successMessage');
+    const errorMsg = document.getElementById('errorMessage');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const acepto = document.getElementById('aceptoReglas').checked;
+      if (!acepto) {
+        alert('Debes aceptar las reglas para poder registrarte en Reyes del Caos.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+
+      emailjs.sendForm('service_81tu80h', 'template_6avzxvf', this)
+        .then(() => {
+          successMsg.style.display = 'block';
+          form.reset();
+        })
+        .catch((err) => {
+          console.error('Error al enviar:', err);
+          errorMsg.style.display = 'block';
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar Registro';
+        });
+    });
+  </script>
+
+</body>
+</html>
