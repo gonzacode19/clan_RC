@@ -177,6 +177,23 @@
       margin-top: 1rem;
       padding: 10px;
     }
+
+    /* ── Estilos agregados para el mensaje de "ya registrado" ── */
+    #alreadyRegistered {
+      display: none;
+      text-align: center;
+      color: #ffcc00;
+      font-size: 1.3rem;
+      margin: 2rem 0;
+      padding: 20px;
+      background: rgba(255, 140, 0, 0.15);
+      border-radius: 12px;
+      border: 2px solid #ff8800;
+    }
+
+    #alreadyRegistered p {
+      margin: 0.8rem 0;
+    }
   </style>
 </head>
 <body>
@@ -188,6 +205,12 @@
     </div>
 
     <h1>Registro al Clan</h1>
+
+    <!-- Mensaje que aparece si ya está registrado -->
+    <div id="alreadyRegistered">
+      <p>¡Ya realizaste tu registro anteriormente!</p>
+      <p>Si deseas registrarte de nuevo, borra los datos del sitio en la configuración de tu navegador o celular.</p>
+    </div>
 
     <form id="registroForm">
 
@@ -237,6 +260,12 @@
     </form>
   </div>
 
+  <!-- Audio que se reproduce al registrarse con éxito -->
+  <audio id="successSound" preload="auto">
+    <source src="toji.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+
   <script>
     // Inicializa EmailJS con tu Public Key
     emailjs.init({
@@ -247,6 +276,14 @@
     const successMsg = document.getElementById('successMessage');
     const errorMsg = document.getElementById('errorMessage');
     const submitBtn = document.getElementById('submitBtn');
+    const alreadyDiv = document.getElementById('alreadyRegistered');
+    const audio = document.getElementById('successSound');
+
+    // Verificar si ya está registrado (usando localStorage)
+    if (localStorage.getItem('registradoEnReyesDelCaos') === 'true') {
+      alreadyDiv.style.display = 'block';
+      form.style.display = 'none';
+    }
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -266,6 +303,16 @@
       emailjs.sendForm('service_81tu80h', 'template_6avzxvf', this)
         .then(() => {
           successMsg.style.display = 'block';
+
+          // Reproducir el sonido
+          audio.currentTime = 0;
+          audio.play().catch(err => {
+            console.log("El sonido no se pudo reproducir automáticamente:", err);
+          });
+
+          // Marcar como registrado
+          localStorage.setItem('registradoEnReyesDelCaos', 'true');
+
           form.reset();
         })
         .catch((err) => {
