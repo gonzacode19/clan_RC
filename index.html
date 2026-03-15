@@ -178,7 +178,6 @@
       padding: 10px;
     }
 
-    /* ── Estilos agregados para el mensaje de "ya registrado" ── */
     #alreadyRegistered {
       display: none;
       text-align: center;
@@ -206,7 +205,6 @@
 
     <h1>Registro al Clan</h1>
 
-    <!-- Mensaje que aparece si ya está registrado -->
     <div id="alreadyRegistered">
       <p>¡Ya realizaste tu registro anteriormente!</p>
       <p>Si deseas registrarte de nuevo, borra los datos del sitio en la configuración de tu navegador o celular.</p>
@@ -260,14 +258,12 @@
     </form>
   </div>
 
-  <!-- Audio que se reproduce al registrarse con éxito -->
   <audio id="successSound" preload="auto">
     <source src="toji.mp3" type="audio/mpeg">
     Tu navegador no soporta el elemento de audio.
   </audio>
 
   <script>
-    // Inicializa EmailJS con tu Public Key
     emailjs.init({
       publicKey: "H9vEYol704RD8rISV",
     });
@@ -279,7 +275,6 @@
     const alreadyDiv = document.getElementById('alreadyRegistered');
     const audio = document.getElementById('successSound');
 
-    // Verificar si ya está registrado (usando localStorage)
     if (localStorage.getItem('registradoEnReyesDelCaos') === 'true') {
       alreadyDiv.style.display = 'block';
       form.style.display = 'none';
@@ -304,16 +299,19 @@
         .then(() => {
           successMsg.style.display = 'block';
 
-          // Reproducir el sonido
           audio.currentTime = 0;
           audio.play().catch(err => {
             console.log("El sonido no se pudo reproducir automáticamente:", err);
           });
 
-          // Marcar como registrado
           localStorage.setItem('registradoEnReyesDelCaos', 'true');
 
           form.reset();
+
+          // Nueva funcionalidad: recargar la página automáticamente después de 2.5 segundos
+          setTimeout(() => {
+            window.location.reload();
+          }, 2500);
         })
         .catch((err) => {
           console.error('Error al enviar:', err);
